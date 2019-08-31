@@ -32,7 +32,7 @@
     </collision>
   </link>
 
-  <link name="shoulder_Link">
+  <!-- <link name="shoulder_Link">
     <inertial>
       <origin xyz="3.2508868974735E-07 0.00534955349296065 -0.00883689325611056" rpy="0 0 0" />
       <mass value="1.57658348693929" />
@@ -216,7 +216,7 @@
     <child link="wrist3_Link" />
     <axis xyz="0 0 1" />
     <limit lower="-3.05" upper="3.05" effort="0" velocity="0" />
-  </joint>
+  </joint> -->
 
   <!-- <link name="world" />
 
@@ -229,7 +229,7 @@
   <link name="connect_Link">
     <visual>
       <geometry>
-        <mesh filename="package://aubo_description/meshes/aubo_i5/visual/connect_robo.STL" />
+        <mesh filename="package://aubo_description/meshes/aubo_i5/visual/connect_robo.STL" scale="0.001 0.001 0.001" />
       </geometry>
     </visual>
   </link>
@@ -237,10 +237,8 @@
   <joint name="connect_joint" type="fixed">
     <parent link="connect_Link"/>
     <child link="base_link"/>
-    <origin xyz="0 0 0" rpy="0 0 0" />
+    <origin xyz="0.17 0.085 -0.0" rpy="3.1415926 0 0" />
   </joint>
-
-
 
   <!-- /////////////////////////////////   i5 room_Link   ////////////////////////////////////// -->
   <link name="room_Link">
@@ -254,9 +252,8 @@
   <joint name="room_joint" type="fixed">
     <parent link="room_Link"/>
     <child link="connect_Link"/>
-    <origin xyz="0 0 0" rpy="1.5708 0 3.1415926" />
+    <origin xyz="4 1.77 0.0" rpy="1.5708 0 3.1415926" />
   </joint>
-
 
  <!-- /////////////////////////////////   world   ////////////////////////////////////// -->
   <link name="world" />
@@ -289,13 +286,13 @@
  </xacro:macro>
 
 
-  <xacro:aubo_arm_transmission joint_name="shoulder_joint"/>
+  <!-- <xacro:aubo_arm_transmission joint_name="shoulder_joint"/>
   <xacro:aubo_arm_transmission joint_name="upperArm_joint"/>
   <xacro:aubo_arm_transmission joint_name="foreArm_joint"/>
   <xacro:aubo_arm_transmission joint_name="wrist1_joint"/>
   <xacro:aubo_arm_transmission joint_name="wrist2_joint"/>
   <xacro:aubo_arm_transmission joint_name="wrist3_joint"/>
-
+ -->
 
 
 
