@@ -1,6 +1,6 @@
 <launch>
 
-<!--  <param name="robot_description" textfile="$(find aubo_gazebo)/urdf/aubo_i5.xacro"/>-->
+ <param name="robot_description" textfile="$(find aubo_description)/urdf/aubo_i5.urdf.xacro"/>
 
   <!-- 1.startup Gazebo -->
   <!-- these are the arguments you can pass this launch file, for example paused:=true -->

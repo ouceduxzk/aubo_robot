@@ -218,12 +218,92 @@
     <limit lower="-3.05" upper="3.05" effort="0" velocity="0" />
   </joint>
 
-  <link name="world" />
+  <!-- <link name="world" />
 
   <joint name="world_joint" type="fixed">
     <parent link="world" />
     <child link = "base_link" />
     <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+  </joint> -->
+<!-- /////////////////////////////////   i5 coonection link   ////////////////////////////////////// -->
+  <link name="connect_Link">
+    <visual>
+      <geometry>
+        <mesh filename="package://aubo_description/meshes/aubo_i5/visual/connect_robo.STL" />
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="connect_joint" type="fixed">
+    <parent link="connect_Link"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0" />
   </joint>
+
+
+
+  <!-- /////////////////////////////////   i5 room_Link   ////////////////////////////////////// -->
+  <link name="room_Link">
+    <visual>
+      <geometry>
+        <mesh filename="package://aubo_description/meshes/aubo_i5/visual/env.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="room_joint" type="fixed">
+    <parent link="room_Link"/>
+    <child link="connect_Link"/>
+    <origin xyz="0 0 0" rpy="1.5708 0 3.1415926" />
+  </joint>
+
+
+ <!-- /////////////////////////////////   world   ////////////////////////////////////// -->
+  <link name="world" />
+
+  <joint name="world_joint" type="fixed">
+    <parent link="world" />
+    <child link ="room_Link" />
+    <origin xyz="0.0 0.0 6.0" rpy="1.5708 0.0 2.1416" />
+  </joint>
+
+
+  <!-- /////////////////////////////////   gazebo color   ////////////////////////////////////// -->
+  <gazebo reference="room_Link">
+     <material>Gazebo/Grey</material>
+  </gazebo>
+
+  <!--////////////////////////////////// Transmissions for ROS Control //////////////////////////-->
+
+<xacro:macro name="aubo_arm_transmission" params="joint_name">
+     <transmission name="${joint_name}_trans">
+       <type>transmission_interface/SimpleTransmission</type>
+       <joint name="${joint_name}">
+         <!--<hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>-->
+         <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+       </joint>
+       <actuator name="${joint_name}_motor">
+         <mechanicalReduction>1</mechanicalReduction>
+       </actuator>
+     </transmission>
+ </xacro:macro>
+
+
+  <xacro:aubo_arm_transmission joint_name="shoulder_joint"/>
+  <xacro:aubo_arm_transmission joint_name="upperArm_joint"/>
+  <xacro:aubo_arm_transmission joint_name="foreArm_joint"/>
+  <xacro:aubo_arm_transmission joint_name="wrist1_joint"/>
+  <xacro:aubo_arm_transmission joint_name="wrist2_joint"/>
+  <xacro:aubo_arm_transmission joint_name="wrist3_joint"/>
+
+
+
+
+  <!-- ros_control plugin -->
+  <gazebo>
+      <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+          <robotNamespace>/aubo_i5</robotNamespace>
+      </plugin>
+  </gazebo>
 
 </robot>
