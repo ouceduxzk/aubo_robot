@@ -32,7 +32,7 @@
     </collision>
   </link>
 
-  <!-- <link name="shoulder_Link">
+  <link name="shoulder_Link">
     <inertial>
       <origin xyz="3.2508868974735E-07 0.00534955349296065 -0.00883689325611056" rpy="0 0 0" />
       <mass value="1.57658348693929" />
@@ -216,15 +216,8 @@
     <child link="wrist3_Link" />
     <axis xyz="0 0 1" />
     <limit lower="-3.05" upper="3.05" effort="0" velocity="0" />
-  </joint> -->
+  </joint>
 
-  <!-- <link name="world" />
-
-  <joint name="world_joint" type="fixed">
-    <parent link="world" />
-    <child link = "base_link" />
-    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
-  </joint> -->
 <!-- /////////////////////////////////   i5 coonection link   ////////////////////////////////////// -->
   <link name="connect_Link">
     <visual>
@@ -249,6 +242,15 @@
     </visual>
   </link>
 
+
+  <link name="car_Link">
+    <visual>
+      <geometry>
+        <mesh filename="package://aubo_description/meshes/aubo_i5/visual/car.stl" scale="0.001 0.001 0.001" />
+      </geometry>
+    </visual>
+  </link>
+
   <joint name="room_joint" type="fixed">
     <parent link="room_Link"/>
     <child link="connect_Link"/>
@@ -257,19 +259,39 @@
 
  <!-- /////////////////////////////////   world   ////////////////////////////////////// -->
   <link name="world" />
+  <link name="link0" />
+    <joint name="world_joint" type="fixed">
+      <parent link="world" />
+      <child link="link0" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <axis xyz="0 0 1"/>
+    </joint>
 
-  <joint name="world_joint" type="fixed">
-    <parent link="world" />
+
+  <joint name="wash_joint" type="fixed">
+    <parent link="link0" />
     <child link ="room_Link" />
     <origin xyz="0.0 0.0 0.0" rpy="1.5708 0.0 3.1416" />
   </joint>
 
+  <joint name="car_joint" type="fixed">
+    <parent link="link0" />
+    <child link ="car_Link" />
+    <origin xyz="-3 0.0 0.0" rpy="0 0.0 0" />
+  </joint>
+
+
 
   <!-- /////////////////////////////////   gazebo color   ////////////////////////////////////// -->
-  <gazebo reference="room_Link">
-     <material>Gazebo/Grey</material>
+  <gazebo reference="car_Link">
+     <material>Gazebo/Green</material>
   </gazebo>
-
+  <gazebo reference="room_Link">
+     <material>Gazebo/Blue</material>
+  </gazebo>
+   <gazebo reference="connect_Link">
+     <material>Gazebo/Black</material>
+  </gazebo>
   <!--////////////////////////////////// Transmissions for ROS Control //////////////////////////-->
 
 <xacro:macro name="aubo_arm_transmission" params="joint_name">
@@ -286,13 +308,13 @@
  </xacro:macro>
 
 
-  <!-- <xacro:aubo_arm_transmission joint_name="shoulder_joint"/>
+  <xacro:aubo_arm_transmission joint_name="shoulder_joint"/>
   <xacro:aubo_arm_transmission joint_name="upperArm_joint"/>
   <xacro:aubo_arm_transmission joint_name="foreArm_joint"/>
   <xacro:aubo_arm_transmission joint_name="wrist1_joint"/>
   <xacro:aubo_arm_transmission joint_name="wrist2_joint"/>
   <xacro:aubo_arm_transmission joint_name="wrist3_joint"/>
- -->
+
 
 
 
